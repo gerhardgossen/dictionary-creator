@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Dictionary Creator by gerhardgossen</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/gerhardgossen/dictionary-creator">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/gerhardgossen/dictionary-creator/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/gerhardgossen/dictionary-creator/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Dictionary Creator</h1>
+          <p>Create a dictionary with inverse document frequency (idf) values from the Google NGrams dataset</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/gerhardgossen">gerhardgossen</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Download the 1-gram files and the <em>total counts</em> files for your language from
+the <a href="http://storage.googleapis.com/books/ngrams/books/datasetsv2.html">Google NGrams</a> site into a common folder.</p>
+
+<p>Compile using Maven:</p>
+
+<pre><code>mvn compile assembly:single
+</code></pre>
+
+<p>Run as:</p>
+
+<pre><code>java -jar target/dictionary-creator-0.0.1-SNAPSHOT-jar-with-dependencies.jar $ngrams_folder $output_file
+</code></pre>
+
+<p>Run the program without arguments to see the other parameters.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Copyright 2015 Gerhard Gossen. This program may be used under the Apache License 2.0.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
