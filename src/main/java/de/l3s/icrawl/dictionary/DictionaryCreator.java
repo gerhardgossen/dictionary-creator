@@ -28,6 +28,7 @@ import com.google.common.io.Files;
 import static java.nio.charset.StandardCharsets.US_ASCII;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toMap;
 
 public class DictionaryCreator {
@@ -108,7 +109,6 @@ public class DictionaryCreator {
 
     private long totalVolumes;
 
-
     public static void main(String[] args) throws IOException {
 
         DictionaryCreator creator = new DictionaryCreator();
@@ -138,11 +138,12 @@ public class DictionaryCreator {
                 Map<String, Long> wordWithPosCounts = reader.lines()
                     .map(DictionaryEntry::parse)
                     .filter(e -> e.year >= firstYear)
+                    .filter(e -> !e.word.contains("_")) // remove annotated variants
                     .collect(toMap(DictionaryEntry::getWord, DictionaryEntry::getVolumeCount, (a, b) -> a + b));
                 Map<String, Long> dictionary = wordWithPosCounts.entrySet()
                     .stream()
                     .map(e -> new Counted(e.getKey(), e.getValue()))
-                    .map(c -> c.withKey(cleanPos(c.key)))
+                    .map(c -> c.withKey(c.key))
                     .collect(toMap(Counted::getKey, Counted::getCount, (a, b) -> Math.max(a, b)));
                 globalDictionary.putAll(dictionary);
                 System.out.printf("%s -> %d, total=%d%n", letterFile.getName(), dictionary.size(),
@@ -156,11 +157,6 @@ public class DictionaryCreator {
                 .limit(numWords)
                 .forEach(e -> writer.printf(Locale.ROOT, "%s\t%15.13f%n", e.getKey(), idf(e.getValue(), totalVolumes)));
         }
-    }
-
-    private static String cleanPos(String s) {
-        int position = s.indexOf("_");
-        return position < 0 ? s : s.substring(0, position);
     }
 
     private static BufferedReader openGZipFileReader(File letterFile, Charset cs, int bufferSize) throws IOException {
