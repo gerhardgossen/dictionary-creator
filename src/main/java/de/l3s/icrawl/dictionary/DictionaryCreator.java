@@ -31,6 +31,8 @@ import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toMap;
 
 public class DictionaryCreator {
+    private static final String FILENAME_PATTERN = ".*-\\w+\\.gz$";
+
     private static class DictionaryEntry {
         private final static Splitter TOKENIZER = Splitter.on('\t').limit(4);
         final String word;
@@ -127,8 +129,9 @@ public class DictionaryCreator {
     public void run() throws IOException {
         readTotals();
         System.out.println("First year: " + firstYear);
-        File[] letterFiles = unigramsDir.listFiles((dir, name) -> name.matches(".*-\\w\\.gz$"));
+        File[] letterFiles = unigramsDir.listFiles((dir, name) -> name.matches(FILENAME_PATTERN));
         Arrays.sort(letterFiles, (a, b) -> a.getName().compareTo(b.getName()));
+        System.out.println("Using files: " + stream(letterFiles).map(f -> f.getName()).collect(joining(",", "[", "]")));
         Map<String, Long> globalDictionary = new HashMap<>(7_500_000);
         for (File letterFile : letterFiles) {
             try (BufferedReader reader = openGZipFileReader(letterFile, UTF_8, BUFFER_SIZE)) {
